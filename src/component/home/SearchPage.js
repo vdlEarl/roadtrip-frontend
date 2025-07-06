@@ -92,6 +92,9 @@ const SearchPage = ({ onClose, goToMap }) => {
           </Grid>
         ))}
       </Grid>
+
+      {/* Marge de fin pour le scroll */}
+      <Box sx={{ height: 100 }} />
     </Box>
   );
 };
