@@ -22,6 +22,7 @@ const CalendarPage = ({ onClose, goToMap }) => {
       <Typography variant="h5" sx={{ mb: 3, textAlign: "center", fontWeight: "bold" }}>
         Itinéraire du Roadtrip
       </Typography>
+      <Box sx={{ height: 20 }} />
 
       <Stack spacing={3}>
         {itineraire.map((etape, index) => (
@@ -56,9 +57,13 @@ const CalendarPage = ({ onClose, goToMap }) => {
                 </Typography>
               ))}
             </Box>
+            
           </Paper>
+          
         ))}
       </Stack>
+      <Box sx={{ height: 100 }} />
+
     </Box>
   );
 };

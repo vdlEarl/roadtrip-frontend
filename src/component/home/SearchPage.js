@@ -41,10 +41,10 @@ const SearchPage = ({ onClose, goToMap }) => {
         <CloseIcon />
       </IconButton>
 
-      <Typography variant="h4" align="center" gutterBottom sx={{ mt: 5 }}>
-        Activités à venir
+      <Typography variant="h5" sx={{ mb: 3, textAlign: "center", fontWeight: "bold" }}>
+        Activités
       </Typography>
-
+      <Box sx={{ height: 20 }} />
       <Grid container spacing={3} justifyContent="center">
         {activites.map((activity, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>

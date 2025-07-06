@@ -1,25 +1,27 @@
+// src/theme.js
 import { createTheme } from "@mui/material/styles";
-import "@fontsource/poppins"; // Police moderne et équilibrée
-import "@fontsource/roboto-slab"; // Police professionnelle pour les titres
+import "@fontsource/poppins"; // Moderne
+import "@fontsource/roboto-slab"; // Titres élégants
 
 const theme = createTheme({
   palette: {
+    mode: "light",
     background: {
-      default: "#F5F7FA", // Gris clair très propre
-      paper: "#FFFFFF", // Blanc pur pour les composants
+      default: "#F9FAFB",     // Très clair
+      paper: "#FFFFFF",       // Blanc pur
     },
     text: {
-      primary: "#333333", // Gris foncé professionnel
-      secondary: "#606060", // Gris moyen pour contraste subtil
+      primary: "#1F2937",     // Bleu-gris très foncé (quasi noir)
+      secondary: "#6B7280",   // Gris doux moderne
     },
     primary: {
-      main: "#4CAF50", // Vert positif évoquant croissance économique
+      main: "#0F62FE",        // Bleu IBM / moderne & professionnel
     },
     secondary: {
-      main: "#1976D2", // Bleu corporate professionnel
+      main: "#6C63FF",        // Bleu-violet doux pour l'accentuation
     },
     accent: {
-      main: "#FFB300", // Jaune vif discret pour attirer l'attention
+      main: "#FF6B6B",        // Rouge doux (si besoin ponctuel)
     },
   },
   typography: {
@@ -32,27 +34,29 @@ const theme = createTheme({
       fontFamily: "'Roboto Slab', serif",
       fontSize: "2.5rem",
       fontWeight: 700,
-      color: "#333333",
+      color: "#1F2937",
     },
     h2: {
       fontFamily: "'Roboto Slab', serif",
       fontSize: "2rem",
       fontWeight: 600,
-      color: "#1976D2",
+      color: "#0F62FE",
     },
     body1: {
       fontSize: "1rem",
-      color: "#333333",
+      color: "#1F2937",
     },
   },
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
-          backgroundColor: "#4CAF50",
+          backgroundColor: "#0F62FE",
           color: "#FFFFFF",
+          borderRadius: 8,
+          boxShadow: "none",
           "&:hover": {
-            backgroundColor: "#43A047",
+            backgroundColor: "#0052CC",
           },
         },
       },

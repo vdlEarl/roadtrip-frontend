@@ -60,14 +60,15 @@ const itineraire = [
       etapes: [
         { name: "Saint-Jacques-de-Compostelle", coords: [42.8782, -8.5448] },
         { name: "Vigo", coords: [42.2406, -8.7207] },
-        { name: "Peneda-Gerês ou Arcos de Valdevez", coords: [41.8497, -8.4074] },
+        { name: "Braga", coords: [41.5454, -8.4265] }
+
       ],
     },
     {
       jour: "Jour 8",
       date: "Lundi 14/07/2025",
       etapes: [
-        { name: "???", coords: [41.0, -8.0] },
+        { name: "Braga", coords: [41.5454, -8.4265] },
         { name: "Porto", coords: [41.1579, -8.6291] },
       ],
     },
