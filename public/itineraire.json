@@ -1,0 +1,24 @@
+[
+    {
+      "lat": 48.111,
+      "lng": -1.68,
+      "ville": "Rennes",
+      "heure": "08:00",
+      "activite": "Départ du roadtrip"
+    },
+    {
+      "lat": 47.218,
+      "lng": -1.553,
+      "ville": "Nantes",
+      "heure": "10:30",
+      "activite": "Pause déjeuner"
+    },
+    {
+      "lat": 46.2276,
+      "lng": 2.2137,
+      "ville": "Étape 3",
+      "heure": "17:00",
+      "activite": "Camping"
+    }
+  ]
+  

@@ -1,0 +1,6 @@
+@import url('leaflet/dist/leaflet.css');
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
