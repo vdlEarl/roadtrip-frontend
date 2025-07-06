@@ -1,51 +1,27 @@
-import React, { useState } from "react";
-import { Box, IconButton, Typography, TextField, Button, ToggleButtonGroup, ToggleButton, MenuItem, FormControlLabel, Checkbox } from "@mui/material";
+// src/component/home/SearchPage.js
+
+import React from "react";
+import {
+  Box,
+  Typography,
+  IconButton,
+  Grid,
+  Paper,
+  Link,
+  Tooltip,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import axios from "axios";
+import PlaceIcon from "@mui/icons-material/Place";
+import activites from "../../data/activites";
+import { useTripContext } from "../context/TripContext";
 
-const expenseTypes = ["Alimentation", "Transport", "Logement", "Loisirs", "Santé", "Vêtements", "Abonnements", "Autre"];
+const SearchPage = ({ onClose, goToMap }) => {
+  const { setSelectedActivity } = useTripContext();
 
-const SearchPage = ({ onClose }) => {
-  const [mode, setMode] = useState("expense");
-  const [amount, setAmount] = useState("");
-  const [description, setDescription] = useState("");
-  const [date, setDate] = useState("");
-  const [store, setStore] = useState("");
-  const [expenseType, setExpenseType] = useState("");
-  const [isRecurring, setIsRecurring] = useState(false);
-
-  const handleModeChange = (event, newMode) => {
-    if (newMode !== null) setMode(newMode);
-  };
-
-  const handleSubmit = async () => {
-    if (parseFloat(amount) <= 0) {
-      alert("Le montant doit être supérieur à 0.");
-      return;
-    }
-
-    const transaction = {
-      type: mode,
-      date,
-      amount: parseFloat(amount),
-      description,
-      store: mode === "expense" ? store : null,
-      expense_type: mode === "expense" ? expenseType : null,
-      recurring: isRecurring,
-    };
-
-    try {
-      await axios.post("http://localhost:5000/transactions", transaction);
-      alert(`${mode === "expense" ? "Dépense" : "Rentrée"} enregistrée avec succès.`);
-      setAmount("");
-      setDescription("");
-      setDate("");
-      setStore("");
-      setExpenseType("");
-      setIsRecurring(false);
-    } catch (error) {
-      alert("Erreur lors de l'enregistrement : " + error.message);
-    }
+  const handleActivityClick = (activity) => {
+    setSelectedActivity(activity);
+    if (goToMap) goToMap("home");
+    if (onClose) onClose();
   };
 
   return (
@@ -56,106 +32,66 @@ const SearchPage = ({ onClose }) => {
         right: 0,
         width: "100vw",
         height: "100vh",
-        backgroundColor: "background.paper",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
+        backgroundColor: "background.default",
         padding: 3,
-        overflowY: "auto",
+        overflowY: "scroll",
       }}
     >
       <IconButton onClick={onClose} sx={{ position: "absolute", top: 20, right: 20 }}>
         <CloseIcon />
       </IconButton>
 
-      <ToggleButtonGroup
-        value={mode}
-        exclusive
-        onChange={handleModeChange}
-        sx={{ marginBottom: 3 }}
-        fullWidth
-      >
-        <ToggleButton value="expense">Dépense</ToggleButton>
-        <ToggleButton value="income">Rentrée</ToggleButton>
-      </ToggleButtonGroup>
-
-      <Typography variant="h6" sx={{ marginBottom: 2 }}>
-        {mode === "expense" ? "Ajouter une dépense" : "Ajouter une rentrée"}
+      <Typography variant="h4" align="center" gutterBottom sx={{ mt: 5 }}>
+        Activités à venir
       </Typography>
 
-      {/* Champ Date pour tout le monde */}
-      <TextField
-        label="Date"
-        type="date"
-        variant="outlined"
-        fullWidth
-        InputLabelProps={{ shrink: true }}
-        sx={{ marginBottom: 2 }}
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
-      />
+      <Grid container spacing={3} justifyContent="center">
+        {activites.map((activity, index) => (
+          <Grid item xs={12} sm={6} md={4} key={index}>
+            <Paper
+              elevation={4}
+              sx={{
+                padding: 2,
+                borderRadius: 3,
+                transition: "0.3s",
+                ":hover": { transform: "scale(1.03)", boxShadow: 6 },
+              }}
+            >
+              <Typography variant="h6" gutterBottom>
+                {activity.lieu}
+              </Typography>
 
+              {activity.noms.map((nom, i) => (
+                <Typography key={i} variant="body1" sx={{ ml: 1 }}>
+                  • {nom}
+                </Typography>
+              ))}
 
-      {mode === "expense" && (
-        <>
-          
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  mt: 2,
+                }}
+              >
+                <Tooltip title="Voir sur la carte">
+                  <PlaceIcon
+                    sx={{ color: "primary.main", cursor: "pointer" }}
+                    onClick={() => handleActivityClick(activity)}
+                  />
+                </Tooltip>
 
-          <TextField
-            label="Boutique"
-            variant="outlined"
-            fullWidth
-            sx={{ marginBottom: 2 }}
-            value={store}
-            onChange={(e) => setStore(e.target.value)}
-          />
-
-          <TextField
-            select
-            label="Type de dépense"
-            variant="outlined"
-            fullWidth
-            sx={{ marginBottom: 2 }}
-            value={expenseType}
-            onChange={(e) => setExpenseType(e.target.value)}
-          >
-            {expenseTypes.map((type) => (
-              <MenuItem key={type} value={type}>
-                {type}
-              </MenuItem>
-            ))}
-          </TextField>
-        </>
-      )}
-
-      <TextField
-        label="Montant (€)"
-        variant="outlined"
-        type="number"
-        fullWidth
-        sx={{ marginBottom: 2 }}
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-      />
-
-      <TextField
-        label="Description"
-        variant="outlined"
-        fullWidth
-        sx={{ marginBottom: 2 }}
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
-
-      <FormControlLabel
-        control={<Checkbox checked={isRecurring} onChange={(e) => setIsRecurring(e.target.checked)} />}
-        label={mode === "expense" ? "Dépense récurrente" : "Rentrée récurrente"}
-        sx={{ marginBottom: 3 }}
-      />
-
-      <Button variant="contained" color="primary" fullWidth onClick={handleSubmit}>
-        Valider
-      </Button>
+                {activity.lien && (
+                  <Link href={activity.lien} target="_blank" rel="noopener" underline="hover">
+                    Voir l’activité
+                  </Link>
+                )}
+              </Box>
+            </Paper>
+          </Grid>
+        ))}
+      </Grid>
     </Box>
   );
 };

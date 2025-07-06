@@ -4,9 +4,10 @@ const TripContext = createContext();
 
 export const TripProvider = ({ children }) => {
   const [selectedStep, setSelectedStep] = useState(null);
+  const [selectedActivity, setSelectedActivity] = useState(null);
 
   return (
-    <TripContext.Provider value={{ selectedStep, setSelectedStep }}>
+    <TripContext.Provider value={{ selectedStep, setSelectedStep, selectedActivity, setSelectedActivity,}}>
       {children}
     </TripContext.Provider>
   );

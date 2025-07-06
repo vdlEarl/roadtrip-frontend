@@ -47,12 +47,12 @@ const FollowUserControl = ({ followUser }) => {
 };
 
 const MapPage = () => {
-  const { selectedStep } = useTripContext();
   const [userPosition, setUserPosition] = useState(null);
   const [stepRoute, setStepRoute] = useState([]);
   const [routeToStep, setRouteToStep] = useState([]);
   const [fullRoute, setFullRoute] = useState([]);
   const [followUser, setFollowUser] = useState(false);
+  const { selectedStep, selectedActivity } = useTripContext();
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -157,11 +157,24 @@ const MapPage = () => {
       console.error("Erreur ORS itinéraire complet :", e);
     }
   };
+  useEffect(() => {
+    if (selectedActivity) {
+      setFullRoute([]);
+      setStepRoute([]);
+      setRouteToStep([]);
+    }
+  }, [selectedActivity]);
+  
 
   return (
     <div style={{ height: "100%", width: "100%", position: "relative" }}>
-      <MapContainer center={[46.5, -1.5]} zoom={6} style={{ height: "100%", width: "100%" }}>
+      <MapContainer center={selectedActivity ? selectedActivity.coords : [46.5, -1.5]} zoom={selectedActivity ? 12 : 6}  style={{ height: "100%", width: "100%" }}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        {selectedActivity && (
+          <Marker position={selectedActivity.coords} icon={userIcon}>
+            <Popup>{selectedActivity.lieu}</Popup>
+          </Marker>
+        )}
 
         {userPosition && (
           <Marker position={userPosition} icon={userIcon}>
